@@ -2,7 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="description" content="Professional product documentation and image register for Quality/R&D teams">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Product Register">
+    <link rel="apple-touch-icon" href="product-register.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="product-register.png">
     <title>Product Documentation & Image Register</title>
     <style>
         * {
@@ -1625,6 +1633,53 @@
         // Initialize app when DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
             app.init();
+        });
+    </script>
+
+    <!-- Service Worker Registration for PWA -->
+    <script>
+        // Register Service Worker for offline support and caching
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered successfully:', registration);
+                        
+                        // Check for updates periodically
+                        setInterval(() => {
+                            registration.update();
+                        }, 60000); // Check every minute
+                    })
+                    .catch((error) => {
+                        console.warn('Service Worker registration failed:', error);
+                    });
+            });
+
+            // Listen for service worker updates
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                console.log('Service Worker controller changed - app updated');
+                // Optionally show a notification that the app has been updated
+                if (window.app && window.app.showAlert) {
+                    window.app.showAlert('✅ App updated! Please refresh for the latest version.', 'success');
+                }
+            });
+        }
+
+        // Handle app installation prompts
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            console.log('Install prompt available');
+            
+            // You can show a custom install button here if desired
+            // For now, the browser will show its own prompt
+        });
+
+        // Handle successful installation
+        window.addEventListener('appinstalled', () => {
+            console.log('App installed as PWA');
+            deferredPrompt = null;
         });
     </script>
 </body>

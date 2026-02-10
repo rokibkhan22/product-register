@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
     <meta name="theme-color" content="#2c3e50">
     <meta name="description" content="Professional product documentation and image register for Quality/R&D teams">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,6 +17,13 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
         }
 
         :root {
@@ -33,73 +40,79 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             color: var(--text);
             min-height: 100vh;
-            padding: 20px;
+            padding: 0;
+            margin: 0;
         }
 
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
+            max-width: 100%;
+            width: 100%;
+            margin: 0;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 0;
+            box-shadow: none;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* Header */
         .header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 30px;
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 8px;
             flex-wrap: wrap;
-            gap: 20px;
+            flex-shrink: 0;
         }
 
         .header h1 {
-            font-size: 28px;
+            font-size: 16px;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            flex: 1;
+            min-width: 200px;
         }
 
         .header-icon {
-            font-size: 32px;
+            font-size: 20px;
         }
 
         .status-bar {
             display: flex;
-            gap: 20px;
+            gap: 8px;
             align-items: center;
             flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         .status-indicator {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
+            gap: 4px;
+            padding: 4px 8px;
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
-            font-size: 14px;
+            border-radius: 4px;
+            font-size: 11px;
+            white-space: nowrap;
         }
 
         .status-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: var(--warning);
             animation: pulse 2s infinite;
-        }
-
-        .status-dot.connected {
-            background: var(--success);
         }
 
         @keyframes pulse {
@@ -109,431 +122,125 @@
 
         /* Main Content */
         .content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 0;
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
-        @media (max-width: 1024px) {
-            .content {
-                grid-template-columns: 1fr;
-            }
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid var(--light);
+            background: white;
+            flex-shrink: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
-        /* Mobile Responsiveness - Tablet */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .header {
-                padding: 15px;
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .header h1 {
-                font-size: 20px;
-            }
-
-            .status-bar {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .content {
-                padding: 15px;
-                gap: 15px;
-            }
-
-            .form-section {
-                padding: 15px;
-            }
-
-            .form-section h2 {
-                font-size: 16px;
-            }
-
-            .form-group input,
-            .form-group textarea {
-                font-size: 16px;
-            }
-
-            .button-group {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-
-            button {
-                padding: 10px 15px;
-                font-size: 13px;
-            }
-
-            .table-wrapper {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            table {
-                font-size: 12px;
-            }
-
-            th, td {
-                padding: 8px;
-            }
-
-            .thumbnail {
-                width: 50px;
-                height: 40px;
-            }
-
-            .modal-content {
-                max-width: 95%;
-            }
+        .tab-button {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 16px;
+            border: none;
+            background: white;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
-        /* Mobile Responsiveness - Phone */
-        @media (max-width: 480px) {
-            body {
-                padding: 8px;
-            }
-
-            .container {
-                border-radius: 8px;
-                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            }
-
-            .header {
-                padding: 12px;
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .header h1 {
-                font-size: 16px;
-            }
-
-            .header-icon {
-                font-size: 20px;
-            }
-
-            .status-bar {
-                width: 100%;
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .status-indicator {
-                padding: 6px 10px;
-                font-size: 11px;
-                justify-content: center;
-            }
-
-            .content {
-                display: grid;
-                grid-template-columns: 1fr;
-                padding: 12px;
-                gap: 12px;
-            }
-
-            .form-section {
-                padding: 12px;
-            }
-
-            .form-section h2 {
-                font-size: 14px;
-                margin-bottom: 12px;
-            }
-
-            .form-group {
-                margin-bottom: 10px;
-            }
-
-            .form-group label {
-                font-size: 12px;
-                margin-bottom: 5px;
-            }
-
-            .form-group input,
-            .form-group textarea,
-            .form-group select {
-                padding: 8px;
-                font-size: 14px;
-                width: 100%;
-            }
-
-            .form-group textarea {
-                min-height: 50px;
-            }
-
-            .button-group {
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 6px;
-                margin-top: 12px;
-            }
-
-            button {
-                padding: 8px 12px;
-                font-size: 12px;
-                width: 100%;
-            }
-
-            .btn-icon {
-                width: 24px;
-                height: 24px;
-                font-size: 12px;
-            }
-
-            .table-section {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .table-controls {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                margin-bottom: 12px;
-            }
-
-            .search-box {
-                width: 100%;
-            }
-
-            .search-box input {
-                padding: 8px;
-                font-size: 14px;
-                width: 100%;
-            }
-
-            .table-wrapper {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                border-radius: 4px;
-            }
-
-            table {
-                font-size: 11px;
-                min-width: 600px;
-            }
-
-            th {
-                padding: 8px;
-                font-size: 10px;
-                text-transform: uppercase;
-            }
-
-            td {
-                padding: 8px;
-                font-size: 11px;
-            }
-
-            .thumbnail {
-                width: 45px;
-                height: 36px;
-            }
-
-            .actions {
-                gap: 4px;
-            }
-
-            .btn-edit, .btn-delete {
-                padding: 6px;
-                font-size: 11px;
-            }
-
-            .modal {
-                padding: 10px;
-            }
-
-            .modal-content {
-                max-width: 98%;
-                max-height: 95vh;
-                border-radius: 8px;
-            }
-
-            .modal-header {
-                padding: 12px;
-            }
-
-            .modal-header h2 {
-                font-size: 14px;
-            }
-
-            .modal-body {
-                padding: 12px;
-            }
-
-            .modal-footer {
-                padding: 10px;
-                gap: 6px;
-            }
-
-            .file-input-label {
-                padding: 12px;
-                font-size: 12px;
-            }
-
-            .image-preview {
-                max-width: 120px;
-                height: 96px;
-            }
-
-            .image-info {
-                font-size: 10px;
-            }
-
-            .empty-state {
-                padding: 30px 10px;
-            }
-
-            .empty-state-icon {
-                font-size: 28px;
-            }
+        .tab-button.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            background: #f8f9fa;
         }
 
         /* Form Section */
         .form-section {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 10px;
-            border: 1px solid var(--light);
+            background: white;
+            padding: 16px;
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .form-section.active {
+            display: flex;
         }
 
         .form-section h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
             color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 8px;
         }
 
         .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 500;
             color: var(--text);
-            font-size: 14px;
-        }
-
-        .form-group label .required {
-            color: var(--danger);
         }
 
         .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px;
+        .form-group textarea {
+            padding: 10px;
             border: 1px solid var(--border);
             border-radius: 6px;
-            font-family: inherit;
             font-size: 14px;
-            transition: all 0.3s ease;
+            font-family: inherit;
+            width: 100%;
+        }
+
+        .form-group textarea {
+            min-height: 60px;
+            resize: vertical;
         }
 
         .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
 
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-            font-family: inherit;
-        }
-
-        .file-input-wrapper {
-            position: relative;
-            display: block;
-        }
-
-        .file-input-label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 20px;
-            border: 2px dashed var(--border);
-            border-radius: 6px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .file-input-label:hover {
-            border-color: var(--accent);
-            background: rgba(52, 152, 219, 0.05);
-        }
-
-        .file-input-label.has-file {
-            border-color: var(--success);
-            background: rgba(39, 174, 96, 0.05);
-        }
-
-        #productImage {
-            display: none;
-        }
-
-        .image-preview-container {
-            margin-top: 10px;
-            display: none;
-        }
-
-        .image-preview-container.active {
-            display: block;
-        }
-
-        .image-preview {
-            width: 100%;
-            max-width: 200px;
-            height: 160px;
-            object-fit: cover;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-        }
-
-        .image-info {
-            font-size: 12px;
-            color: var(--text-light);
-            margin-top: 8px;
-        }
-
         .button-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 25px;
-        }
-
-        .button-group.full {
-            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 12px;
         }
 
         button {
-            padding: 12px 20px;
+            padding: 10px 12px;
             border: none;
             border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
         }
 
         .btn-primary {
@@ -541,31 +248,18 @@
             color: white;
         }
 
-        .btn-primary:hover {
+        .btn-primary:active {
             background: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            transform: scale(0.98);
         }
 
         .btn-secondary {
             background: var(--light);
             color: var(--text);
-            border: 1px solid var(--border);
         }
 
-        .btn-secondary:hover {
+        .btn-secondary:active {
             background: #d5dbdb;
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #229954;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
         }
 
         .btn-danger {
@@ -573,145 +267,223 @@
             color: white;
         }
 
-        .btn-danger:hover {
+        .btn-danger:active {
             background: #c0392b;
         }
 
-        .btn-warning {
-            background: var(--warning);
+        .btn-success {
+            background: var(--success);
             color: white;
         }
 
-        .btn-warning:hover {
-            background: #d68910;
+        .btn-success:active {
+            background: #229954;
         }
 
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 6px;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 12px;
+            background: #f8f9fa;
+            border: 2px dashed var(--border);
+            border-radius: 6px;
+            text-align: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .file-input-label:active {
+            background: #e8f4f8;
+            border-color: var(--accent);
+        }
+
+        #fileInput, #cameraInput {
+            display: none;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-top: 8px;
+        }
+
+        .image-info {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-top: 4px;
         }
 
         /* Table Section */
         .table-section {
-            display: flex;
+            background: white;
+            padding: 0;
+            display: none;
             flex-direction: column;
+            gap: 0;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .table-section.active {
+            display: flex;
         }
 
         .table-controls {
             display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 8px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-bottom: 1px solid var(--light);
             flex-wrap: wrap;
         }
 
         .search-box {
             flex: 1;
-            min-width: 200px;
+            min-width: 150px;
         }
 
         .search-box input {
             width: 100%;
-            padding: 10px 15px;
+            padding: 8px 12px;
             border: 1px solid var(--border);
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .table-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
             overflow-x: auto;
+        }
+
+        /* Card Layout for Mobile */
+        .records-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 12px;
+        }
+
+        .record-card {
+            background: white;
             border: 1px solid var(--light);
             border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .record-card-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .record-card-field {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .record-card-label {
+            font-size: 11px;
+            color: var(--text-light);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .record-card-value {
+            font-size: 12px;
+            color: var(--text);
+            word-break: break-word;
+        }
+
+        .record-card-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .record-card-actions button {
+            flex: 1;
+            padding: 8px;
+            font-size: 11px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-        }
-
-        thead {
-            background: var(--primary);
-            color: white;
+            font-size: 12px;
         }
 
         th {
-            padding: 15px;
+            background: var(--primary);
+            color: white;
+            padding: 10px;
             text-align: left;
             font-weight: 600;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 11px;
+            white-space: nowrap;
         }
 
         td {
-            padding: 15px;
+            padding: 10px;
             border-bottom: 1px solid var(--light);
-            font-size: 14px;
+            word-break: break-word;
         }
 
-        tbody tr:hover {
+        tr:hover {
             background: #f8f9fa;
         }
 
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
-
         .thumbnail {
-            width: 60px;
-            height: 48px;
+            width: 50px;
+            height: 40px;
             object-fit: cover;
             border-radius: 4px;
             cursor: pointer;
-            border: 1px solid var(--border);
-            transition: transform 0.2s ease;
-        }
-
-        .thumbnail:hover {
-            transform: scale(1.1);
         }
 
         .actions {
             display: flex;
-            gap: 8px;
+            gap: 4px;
         }
 
-        .btn-icon {
-            width: 32px;
-            height: 32px;
-            padding: 0;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        .btn-edit {
-            background: var(--accent);
-            color: white;
-        }
-
-        .btn-edit:hover {
-            background: #2980b9;
-        }
-
-        .btn-delete {
-            background: var(--danger);
-            color: white;
-        }
-
-        .btn-delete:hover {
-            background: #c0392b;
+        .btn-edit, .btn-delete {
+            padding: 6px 8px;
+            font-size: 11px;
         }
 
         .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
             text-align: center;
-            padding: 60px 20px;
             color: var(--text-light);
         }
 
         .empty-state-icon {
             font-size: 48px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 13px;
         }
 
         /* Modal */
@@ -720,13 +492,12 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            right: 0;
+            bottom: 0;
             background: rgba(0, 0, 0, 0.5);
             z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            padding: 12px;
+            align-items: flex-end;
         }
 
         .modal.active {
@@ -735,18 +506,98 @@
 
         .modal-content {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
+            border-radius: 12px 12px 0 0;
             width: 100%;
             max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .modal-header h2 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-light);
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding: 16px;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            flex: 1;
+        }
+
+        .modal-footer {
+            padding: 12px 16px;
+            border-top: 1px solid var(--light);
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .modal-footer button {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        /* Alert */
+        .alert {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            left: 12px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            z-index: 2000;
             animation: slideIn 0.3s ease;
+            max-width: 400px;
+            margin: 0 auto;
         }
 
         @keyframes slideIn {
             from {
-                transform: translateY(-50px);
+                transform: translateY(-100%);
                 opacity: 0;
             }
             to {
@@ -755,120 +606,71 @@
             }
         }
 
-        .modal-header {
-            padding: 25px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        .alert.success {
+            background: var(--success);
             color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--light);
         }
 
-        .modal-header h2 {
-            font-size: 20px;
-            margin: 0;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
+        .alert.error {
+            background: var(--danger);
             color: white;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .modal-close:hover {
-            opacity: 0.8;
+        .alert.info {
+            background: var(--accent);
+            color: white;
         }
 
-        .modal-body {
-            padding: 25px;
+        /* Responsive Table - Show as cards on mobile */
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+                width: 100%;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tr {
+                margin-bottom: 12px;
+                border: 1px solid var(--light);
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            td {
+                padding: 8px 12px;
+                text-align: left;
+                border-bottom: 1px solid var(--light);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            td:last-child {
+                border-bottom: none;
+            }
+
+            td:before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: var(--text-light);
+                font-size: 11px;
+                min-width: 100px;
+            }
+
+            .thumbnail {
+                width: 60px;
+                height: 48px;
+            }
         }
 
-        .modal-footer {
-            padding: 20px 25px;
-            background: #f8f9fa;
-            border-top: 1px solid var(--light);
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-        }
-
-        /* Image Modal */
-        .image-modal-content {
-            background: transparent;
-            box-shadow: none;
-            max-width: 90vw;
-            max-height: 90vh;
-        }
-
-        .image-modal-content img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        /* Alerts */
-        .alert {
-            padding: 15px 20px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-        }
-
-        .alert-success {
-            background: rgba(39, 174, 96, 0.1);
-            color: var(--success);
-            border: 1px solid var(--success);
-        }
-
-        .alert-error {
-            background: rgba(231, 76, 60, 0.1);
-            color: var(--danger);
-            border: 1px solid var(--danger);
-        }
-
-        .alert-info {
-            background: rgba(52, 152, 219, 0.1);
-            color: var(--accent);
-            border: 1px solid var(--accent);
-        }
-
-        .alert-icon {
-            font-size: 18px;
-        }
-
-        /* Toolbar */
-        .toolbar {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            padding: 20px 30px;
-            background: #f8f9fa;
-            border-bottom: 1px solid var(--light);
-        }
-
-        .toolbar button {
-            padding: 10px 16px;
-            font-size: 13px;
-        }
-
-        /* Loading State */
+        /* Loading spinner */
         .loading {
             display: inline-block;
-            width: 16px;
-            height: 16px;
+            width: 12px;
+            height: 12px;
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-top-color: white;
             border-radius: 50%;
@@ -878,268 +680,104 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .header h1 {
-                justify-content: center;
-            }
-
-            .status-bar {
-                justify-content: center;
-                width: 100%;
-            }
-
-            .content {
-                padding: 20px;
-            }
-
-            .button-group {
-                grid-template-columns: 1fr;
-            }
-
-            th, td {
-                padding: 10px;
-                font-size: 12px;
-            }
-
-            .actions {
-                flex-direction: column;
-            }
-
-            .btn-icon {
-                width: 28px;
-                height: 28px;
-                font-size: 14px;
-            }
-
-            .modal-content {
-                max-width: 95vw;
-            }
-
-            .toolbar {
-                flex-direction: column;
-            }
-
-            .toolbar button {
-                width: 100%;
-            }
-        }
-
-        /* Utility */
-        .text-truncate {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 200px;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .mt-10 {
-            margin-top: 10px;
-        }
-
-        .mb-20 {
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <div class="container">
+        <!-- Header -->
         <div class="header">
-            <h1>
-                <span class="header-icon">📋</span>
-                Product Documentation & Image Register
-            </h1>
+            <h1><span class="header-icon">📋</span> Product Register</h1>
             <div class="status-bar">
                 <div class="status-indicator">
-                    <span class="status-dot" id="statusDot"></span>
-                    <span id="statusText">Ready (Local Mode)</span>
+                    <span class="status-dot"></span>
+                    <span id="statusText">Ready (Local)</span>
                 </div>
-                <button class="btn-secondary" onclick="app.openSetupModal()" title="Configure Google Sheets">⚙️ Setup</button>
+                <button class="btn-secondary" style="padding: 6px 10px; font-size: 12px;" onclick="app.openSetup()">⚙️</button>
             </div>
         </div>
 
-        <!-- Toolbar -->
-        <div class="toolbar">
-            <button class="btn-success" onclick="app.exportToExcel()">
-                📊 Export to Excel
-            </button>
-            <button class="btn-warning" onclick="app.syncToGoogleSheets()">
-                ☁️ Sync to Google Sheets
-            </button>
-            <button class="btn-secondary" onclick="app.clearAllData()" style="margin-left: auto;">
-                🗑️ Clear All Data
-            </button>
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="app.switchTab('form')">➕ Add Record</button>
+            <button class="tab-button" onclick="app.switchTab('table')">📊 View Records</button>
+            <button class="tab-button" onclick="app.syncToGoogleSheets()">☁️ Sync</button>
+            <button class="tab-button" onclick="app.exportToExcel()">📥 Export</button>
         </div>
 
-        <!-- Main Content -->
+        <!-- Content -->
         <div class="content">
             <!-- Form Section -->
-            <div class="form-section">
-                <h2>📝 New Product Record</h2>
-                <form id="productForm">
-                    <div class="form-group">
-                        <label for="date">Date <span class="required">*</span></label>
-                        <input type="date" id="date" required>
-                    </div>
+            <div class="form-section active" id="formSection">
+                <h2>Product Information</h2>
 
-                    <div class="form-group">
-                        <label for="productName">Product Name <span class="required">*</span></label>
-                        <input type="text" id="productName" placeholder="e.g., Orange Juice Premium" required>
-                    </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="dateInput" required>
+                </div>
 
-                    <div class="form-group">
-                        <label for="productFor">Product For <span class="required">*</span></label>
-                        <textarea id="productFor" placeholder="e.g., Juice, Carbonated Drink, Basil Seed Drink, Confectionery" required></textarea>
-                    </div>
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" id="productNameInput" placeholder="e.g., Orange Juice" required>
+                </div>
 
-                    <div class="form-group">
-                        <label for="productDescription">Product Description <span class="required">*</span></label>
-                        <textarea id="productDescription" placeholder="Detailed description of the product..." required></textarea>
-                    </div>
+                <div class="form-group">
+                    <label>Product For</label>
+                    <textarea id="productForInput" placeholder="e.g., Juice, Carbonated Drink, etc." required></textarea>
+                </div>
 
-                    <div class="form-group">
-                        <label for="productImage">Product Picture <span class="required">*</span></label>
-                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                            <label class="file-input-label" id="fileInputLabel" for="productImage" style="flex: 1; margin: 0;">
-                                <span>📷 Upload</span>
-                                <span style="font-size: 11px; color: var(--text-light);">Click or drag</span>
-                            </label>
-                            <button type="button" class="btn-primary" onclick="app.openCamera()" style="flex: 1; margin: 0;">
-                                📸 Take Photo
-                            </button>
-                        </div>
-                        <input type="file" id="productImage" accept=".jpg,.jpeg,.png" required>
-                        <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
-                        <div class="image-preview-container" id="imagePreviewContainer">
-                            <img id="imagePreview" class="image-preview" alt="Preview">
-                            <div class="image-info" id="imageInfo"></div>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label>Product Description</label>
+                    <textarea id="descriptionInput" placeholder="Detailed description of the product" required></textarea>
+                </div>
 
-                    <div class="form-group">
-                        <label for="remarks">Remarks (Optional)</label>
-                        <textarea id="remarks" placeholder="Additional notes..."></textarea>
+                <div class="form-group">
+                    <label>Product Picture</label>
+                    <div class="file-input-wrapper">
+                        <label class="file-input-label" for="fileInput">📸 Upload Photo</label>
+                        <input type="file" id="fileInput" accept="image/jpeg,image/png">
                     </div>
+                    <div class="file-input-wrapper">
+                        <label class="file-input-label" for="cameraInput">📷 Take Photo</label>
+                        <input type="file" id="cameraInput" accept="image/*" capture="environment">
+                    </div>
+                    <img id="imagePreview" class="image-preview" style="display: none;">
+                    <div id="imageInfo" class="image-info"></div>
+                </div>
 
-                    <div class="button-group">
-                        <button type="button" class="btn-primary" onclick="app.handleSubmit()">✅ Submit Record</button>
-                        <button type="reset" class="btn-secondary">🔄 Clear Form</button>
-                    </div>
-                </form>
+                <div class="form-group">
+                    <label>Remarks (Optional)</label>
+                    <textarea id="remarksInput" placeholder="Additional notes"></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-primary" onclick="app.handleSubmit()">✓ Submit</button>
+                    <button class="btn-secondary" onclick="app.clearForm()">✕ Clear</button>
+                </div>
             </div>
 
             <!-- Table Section -->
-            <div class="table-section">
-                <h2 style="margin-bottom: 15px; color: var(--primary); display: flex; align-items: center; gap: 10px;">
-                    📊 Product Records
-                </h2>
+            <div class="table-section" id="tableSection">
                 <div class="table-controls">
                     <div class="search-box">
-                        <input type="text" id="searchInput" placeholder="🔍 Search by Product Name or Category...">
-                    </div>
-                    <div style="display: flex; gap: 8px;">
-                        <span style="display: flex; align-items: center; color: var(--text-light); font-size: 14px;">
-                            Records: <strong id="recordCount" style="margin-left: 5px; color: var(--primary);">0</strong>
-                        </span>
+                        <input type="text" id="searchInput" placeholder="🔍 Search..." onkeyup="app.filterTable()">
                     </div>
                 </div>
                 <div class="table-wrapper">
-                    <table id="dataTable">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Product Name</th>
-                                <th>Product For</th>
-                                <th>Description</th>
-                                <th>Picture</th>
-                                <th>Remarks</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <tr>
-                                <td colspan="7" class="empty-state">
-                                    <div class="empty-state-icon">📭</div>
-                                    <div>No records yet. Add your first product record above.</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div id="recordsContainer" class="records-cards"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Image Modal -->
-    <div class="modal" id="imageModal" onclick="app.closeImageModal(event)">
-        <div class="modal-content image-modal-content">
-            <img id="modalImage" alt="Full view">
-        </div>
-    </div>
-
-    <!-- Edit Modal -->
-    <div class="modal" id="editModal">
+    <div class="modal" id="imageModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>✏️ Edit Product Record</h2>
-                <button class="modal-close" onclick="app.closeEditModal()">×</button>
+                <h2>Product Image</h2>
+                <button class="modal-close" onclick="app.closeModal('imageModal')">✕</button>
             </div>
             <div class="modal-body">
-                <form id="editForm">
-                    <div class="form-group">
-                        <label for="editDate">Date</label>
-                        <input type="date" id="editDate" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="editProductName">Product Name</label>
-                        <input type="text" id="editProductName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="editProductFor">Product For</label>
-                        <textarea id="editProductFor" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="editProductDescription">Product Description</label>
-                        <textarea id="editProductDescription" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="editProductImage">Product Picture (Optional - leave blank to keep current)</label>
-                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                            <label class="file-input-label" id="editFileInputLabel" for="editProductImage" style="flex: 1; margin: 0;">
-                                <span>📷 Upload</span>
-                                <span style="font-size: 11px; color: var(--text-light);">Click or drag</span>
-                            </label>
-                            <button type="button" class="btn-primary" onclick="app.openEditCamera()" style="flex: 1; margin: 0;">
-                                📸 Take Photo
-                            </button>
-                        </div>
-                        <input type="file" id="editProductImage" accept=".jpg,.jpeg,.png">
-                        <input type="file" id="editCameraInput" accept="image/*" capture="environment" style="display: none;">
-                        <div class="image-preview-container" id="editImagePreviewContainer">
-                            <img id="editImagePreview" class="image-preview" alt="Preview">
-                            <div class="image-info" id="editImageInfo"></div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="editRemarks">Remarks</label>
-                        <textarea id="editRemarks"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="app.closeEditModal()">Cancel</button>
-                <button class="btn-primary" onclick="app.saveEditRecord()">Save Changes</button>
+                <img id="modalImage" class="modal-image" alt="Product Image">
             </div>
         </div>
     </div>
@@ -1148,563 +786,333 @@
     <div class="modal" id="setupModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>⚙️ Google Sheets Setup</h2>
-                <button class="modal-close" onclick="app.closeSetupModal()">×</button>
+                <h2>Google Sheets Setup</h2>
+                <button class="modal-close" onclick="app.closeModal('setupModal')">✕</button>
             </div>
             <div class="modal-body">
-                <div class="alert alert-info">
-                    <span class="alert-icon">ℹ️</span>
-                    <span>Paste your Google Apps Script Web App URL to enable automatic syncing.</span>
+                <div class="form-group">
+                    <label>Google Apps Script Web App URL</label>
+                    <textarea id="gasUrlInput" placeholder="Paste your Google Apps Script deployment URL here" style="min-height: 80px;"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="gasUrl">Google Apps Script Web App URL</label>
-                    <input type="url" id="gasUrl" placeholder="https://script.google.com/macros/d/...">
-                </div>
-                <div class="form-group">
-                    <label for="sheetName">Google Sheet Name (Optional)</label>
-                    <input type="text" id="sheetName" placeholder="e.g., Product Records" value="Product Records">
-                </div>
-                <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 6px; font-size: 13px; color: var(--text-light);">
-                    <strong>Setup Instructions:</strong>
-                    <ol style="margin-left: 20px; margin-top: 10px;">
-                        <li>Create a Google Sheet for your products</li>
-                        <li>Create a Google Apps Script project linked to the sheet</li>
-                        <li>Deploy as Web App (execute as you, accessible to anyone)</li>
-                        <li>Copy the deployment URL and paste it above</li>
-                        <li>Click "Save Configuration"</li>
-                    </ol>
+                    <label>Sheet Name (Optional)</label>
+                    <input type="text" id="sheetNameInput" placeholder="Default: Product Records" value="Product Records">
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn-secondary" onclick="app.closeSetupModal()">Cancel</button>
-                <button class="btn-success" onclick="app.saveSetupConfig()">💾 Save Configuration</button>
+                <button class="btn-primary" onclick="app.saveSetup()">💾 Save</button>
+                <button class="btn-secondary" onclick="app.closeModal('setupModal')">Cancel</button>
             </div>
         </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
-    <div class="modal" id="deleteConfirmModal">
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>⚠️ Confirm Deletion</h2>
-                <button class="modal-close" onclick="app.closeDeleteConfirm()">×</button>
+                <h2>Edit Record</h2>
+                <button class="modal-close" onclick="app.closeModal('editModal')">✕</button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete this product record? This action cannot be undone.</p>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="editDate">
+                </div>
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" id="editProductName">
+                </div>
+                <div class="form-group">
+                    <label>Product For</label>
+                    <textarea id="editProductFor"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Product Description</label>
+                    <textarea id="editDescription"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Remarks</label>
+                    <textarea id="editRemarks"></textarea>
+                </div>
+                <img id="editImagePreview" class="image-preview" style="display: none;">
             </div>
             <div class="modal-footer">
-                <button class="btn-secondary" onclick="app.closeDeleteConfirm()">Cancel</button>
-                <button class="btn-danger" onclick="app.confirmDelete()">🗑️ Delete Record</button>
+                <button class="btn-primary" onclick="app.saveEdit()">✓ Save</button>
+                <button class="btn-danger" onclick="app.deleteRecord(app.editingIndex)">🗑️ Delete</button>
+                <button class="btn-secondary" onclick="app.closeModal('editModal')">Cancel</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ============================================================================
-        // PRODUCT REGISTER APP - Main Application Logic
-        // ============================================================================
-
         const app = {
-            // State Management
             state: {
                 records: [],
-                editingId: null,
-                deleteId: null,
-                gasUrl: localStorage.getItem('gasUrl') || '',
-                sheetName: localStorage.getItem('sheetName') || 'Product Records',
-                isConnected: false
+                gasUrl: '',
+                sheetName: 'Product Records',
+                currentTab: 'form'
             },
+            editingIndex: null,
 
-            // Format date as DD/MM/YYYY
-            formatDateDDMMYYYY(dateString) {
-                const date = new Date(dateString);
-                const day = String(date.getDate()).padStart(2, '0');
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const year = date.getFullYear();
-                return `${day}/${month}/${year}`;
-            },
-
-            // Open camera for main form
-            openCamera() {
-                document.getElementById('cameraInput').click();
-            },
-
-            // Open camera for edit form
-            openEditCamera() {
-                document.getElementById('editCameraInput').click();
-            },
-
-                        // Initialize Application
             init() {
-                this.loadRecords();
+                this.loadFromStorage();
                 this.setDefaultDate();
                 this.setupEventListeners();
-                this.updateConnectionStatus();
-                this.renderTable();
+                this.renderRecords();
+                this.registerServiceWorker();
             },
 
-            // Set today's date as default
+            setupEventListeners() {
+                document.getElementById('fileInput').addEventListener('change', (e) => this.handleImageUpload(e));
+                document.getElementById('cameraInput').addEventListener('change', (e) => this.handleImageUpload(e));
+            },
+
             setDefaultDate() {
                 const today = new Date().toISOString().split('T')[0];
-                document.getElementById('date').value = today;
-                document.getElementById('editDate').value = today;
+                document.getElementById('dateInput').value = today;
             },
 
-            // Setup Event Listeners
-            setupEventListeners() {
-                // Image upload with drag & drop
-                this.setupImageUpload('productImage', 'fileInputLabel', 'imagePreview', 'imagePreviewContainer', 'imageInfo');
-                this.setupImageUpload('editProductImage', 'editFileInputLabel', 'editImagePreview', 'editImagePreviewContainer', 'editImageInfo');
+            handleImageUpload(event) {
+                const file = event.target.files[0];
+                if (!file) return;
 
-                // Search functionality
-                document.getElementById('searchInput').addEventListener('input', (e) => {
-                    this.filterTable(e.target.value);
-                });
-
-                // Modal close on background click
-                document.getElementById('imageModal').addEventListener('click', (e) => {
-                    if (e.target.id === 'imageModal') this.closeImageModal(e);
-                });
-
-                document.getElementById('editModal').addEventListener('click', (e) => {
-                    if (e.target.id === 'editModal') this.closeEditModal();
-                });
-
-                document.getElementById('setupModal').addEventListener('click', (e) => {
-                    if (e.target.id === 'setupModal') this.closeSetupModal();
-                });
-
-                document.getElementById('deleteConfirmModal').addEventListener('click', (e) => {
-                    if (e.target.id === 'deleteConfirmModal') this.closeDeleteConfirm();
-                });
-
-                // Camera input handlers
-                document.getElementById('cameraInput').addEventListener('change', (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        this.handleImageUpload(file, document.getElementById('productImage'), document.getElementById('fileInputLabel'), document.getElementById('imagePreview'), document.getElementById('imagePreviewContainer'), document.getElementById('imageInfo'));
-                        e.target.value = '';
-                    }
-                });
-
-                document.getElementById('editCameraInput').addEventListener('change', (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        this.handleImageUpload(file, document.getElementById('editProductImage'), document.getElementById('editFileInputLabel'), document.getElementById('editImagePreview'), document.getElementById('editImagePreviewContainer'), document.getElementById('editImageInfo'));
-                        e.target.value = '';
-                    }
-                });
-            },
-
-            // Setup Image Upload Handler
-            setupImageUpload(inputId, labelId, previewId, containerClass, infoId) {
-                const input = document.getElementById(inputId);
-                const label = document.getElementById(labelId);
-                const preview = document.getElementById(previewId);
-                const container = document.getElementById(containerClass);
-                const info = document.getElementById(infoId);
-
-                // Click to upload
-                label.addEventListener('click', () => input.click());
-
-                // File selection
-                input.addEventListener('change', (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        this.handleImageUpload(file, input, label, preview, container, info);
-                        e.target.value = '';
-                    }
-                });
-
-                // Drag & drop
-                label.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    label.style.borderColor = 'var(--accent)';
-                    label.style.background = 'rgba(52, 152, 219, 0.1)';
-                });
-
-                label.addEventListener('dragleave', () => {
-                    label.style.borderColor = 'var(--border)';
-                    label.style.background = 'white';
-                });
-
-                label.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    label.style.borderColor = 'var(--border)';
-                    label.style.background = 'white';
-                    const file = e.dataTransfer.files[0];
-                    if (file) {
-                        input.files = e.dataTransfer.files;
-                        this.handleImageUpload(file, input, label, preview, container, info);
-                    }
-                });
-            },
-
-            // Handle Image Upload
-            handleImageUpload(file, input, label, preview, container, info) {
-                // Validate file type
-                if (!['image/jpeg', 'image/png'].includes(file.type)) {
-                    alert('❌ Only JPG and PNG images are allowed.');
-                    input.value = '';
-                    return;
-                }
-
-                // Read and validate image
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     const img = new Image();
                     img.onload = () => {
-                        const width = img.width;
-                        const height = img.height;
-                        const requiredWidth = 1280;
-                        const requiredHeight = 1024;
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = 1280;
+                        canvas.height = 1024;
 
-                        // Resize and crop image to required dimensions
-                        const resizedImage = this.resizeAndCropImage(img, requiredWidth, requiredHeight);
-                        
-                        // Display preview
-                        preview.src = resizedImage;
-                        container.classList.add('active');
-                        info.textContent = `✓ Resized to ${requiredWidth}×${requiredHeight}px | Original: ${width}×${height}px`;
-                        label.classList.add('has-file');
-                        
-                        // Store the resized image back to the input for submission
-                        this.storeResizedImage(input, resizedImage);
-                    };
-                    img.onerror = () => {
-                        alert('❌ Failed to load image. Please try another file.');
-                        input.value = '';
+                        const scale = Math.max(1280 / img.width, 1024 / img.height);
+                        const x = (1280 - img.width * scale) / 2;
+                        const y = (1024 - img.height * scale) / 2;
+
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillRect(0, 0, 1280, 1024);
+                        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+
+                        const resizedBase64 = canvas.toDataURL('image/jpeg', 0.9);
+                        document.getElementById('imagePreview').src = resizedBase64;
+                        document.getElementById('imagePreview').style.display = 'block';
+                        document.getElementById('imageInfo').textContent = '✓ Image resized to 1280×1024px';
+                        this.currentImage = resizedBase64;
                     };
                     img.src = e.target.result;
                 };
-                reader.onerror = () => {
-                    alert('❌ Failed to read file. Please try again.');
-                    input.value = '';
-                };
                 reader.readAsDataURL(file);
+
+                event.target.value = '';
             },
 
-            // Resize and Crop Image to Exact Dimensions
-            resizeAndCropImage(img, targetWidth, targetHeight) {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                
-                canvas.width = targetWidth;
-                canvas.height = targetHeight;
-                
-                const imgWidth = img.width;
-                const imgHeight = img.height;
-                const imgRatio = imgWidth / imgHeight;
-                const targetRatio = targetWidth / targetHeight;
-                
-                let sourceX = 0;
-                let sourceY = 0;
-                let sourceWidth = imgWidth;
-                let sourceHeight = imgHeight;
-                
-                // Calculate crop dimensions to maintain aspect ratio
-                if (imgRatio > targetRatio) {
-                    // Image is wider, crop width
-                    sourceWidth = imgHeight * targetRatio;
-                    sourceX = (imgWidth - sourceWidth) / 2;
-                } else {
-                    // Image is taller, crop height
-                    sourceHeight = imgWidth / targetRatio;
-                    sourceY = (imgHeight - sourceHeight) / 2;
-                }
-                
-                // Draw the cropped and resized image
-                ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, targetWidth, targetHeight);
-                
-                // Return as Base64 data URL
-                return canvas.toDataURL('image/jpeg', 0.95);
-            },
-
-            // Store Resized Image in Hidden Data Attribute
-            storeResizedImage(input, resizedImageData) {
-                // Store the resized image data in a data attribute
-                input.dataset.resizedImage = resizedImageData;
-            },
-
-            // Handle Form Submit
             handleSubmit() {
-                const date = document.getElementById('date').value;
-                const productName = document.getElementById('productName').value;
-                const productFor = document.getElementById('productFor').value;
-                const productDescription = document.getElementById('productDescription').value;
-                const remarks = document.getElementById('remarks').value;
-                const imageInput = document.getElementById('productImage');
+                const date = document.getElementById('dateInput').value;
+                const productName = document.getElementById('productNameInput').value.trim();
+                const productFor = document.getElementById('productForInput').value.trim();
+                const description = document.getElementById('descriptionInput').value.trim();
+                const remarks = document.getElementById('remarksInput').value.trim();
 
-                // Validation
-                if (!date || !productName || !productFor || !productDescription) {
-                    alert('❌ Please fill in all required fields.');
+                if (!date || !productName || !productFor || !description || !this.currentImage) {
+                    this.showAlert('❌ Please fill all required fields and upload an image', 'error');
                     return;
                 }
 
-                if (!imageInput.dataset.resizedImage) {
-                    alert('❌ Please upload a product image.');
-                    return;
-                }
-
-                // Use resized image
-                const imageData = imageInput.dataset.resizedImage;
-                
                 const record = {
                     id: Date.now(),
-                    date: date,
-                    productName: productName,
-                    productFor: productFor,
-                    productDescription: productDescription,
-                    image: imageData,
-                    remarks: remarks
+                    date: this.formatDate(date),
+                    productName,
+                    productFor,
+                    productDescription: description,
+                    remarks,
+                    image: this.currentImage
                 };
 
                 this.state.records.push(record);
-                this.saveRecords();
-                this.renderTable();
-                this.showAlert('✅ Product record saved successfully!', 'success');
-                
-                // Reset form
-                document.getElementById('productForm').reset();
-                this.setDefaultDate();
-                document.getElementById('imagePreviewContainer').classList.remove('active');
-                document.getElementById('fileInputLabel').classList.remove('has-file');
-                imageInput.dataset.resizedImage = '';
-                imageInput.value = '';
-                document.getElementById('cameraInput').value = '';
+                this.saveToStorage();
+                this.renderRecords();
+                this.clearForm();
+                this.showAlert('✅ Record added successfully!', 'success');
             },
 
-            // Open Edit Modal
-            openEditModal(id) {
-                const record = this.state.records.find(r => r.id === id);
-                if (!record) return;
+            formatDate(dateStr) {
+                const [year, month, day] = dateStr.split('-');
+                return `${day}/${month}/${year}`;
+            },
 
-                this.state.editingId = id;
-                document.getElementById('editDate').value = record.date;
+            clearForm() {
+                document.getElementById('dateInput').value = new Date().toISOString().split('T')[0];
+                document.getElementById('productNameInput').value = '';
+                document.getElementById('productForInput').value = '';
+                document.getElementById('descriptionInput').value = '';
+                document.getElementById('remarksInput').value = '';
+                document.getElementById('imagePreview').style.display = 'none';
+                document.getElementById('imageInfo').textContent = '';
+                document.getElementById('fileInput').value = '';
+                document.getElementById('cameraInput').value = '';
+                this.currentImage = null;
+            },
+
+            renderRecords() {
+                const container = document.getElementById('recordsContainer');
+                if (this.state.records.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No records yet. Add one to get started!</p></div>';
+                    return;
+                }
+
+                container.innerHTML = this.state.records.map((record, index) => `
+                    <div class="record-card">
+                        <img src="${record.image}" class="record-card-image" onclick="app.viewImage('${record.image}')">
+                        <div class="record-card-field">
+                            <div class="record-card-label">Date</div>
+                            <div class="record-card-value">${record.date}</div>
+                        </div>
+                        <div class="record-card-field">
+                            <div class="record-card-label">Product Name</div>
+                            <div class="record-card-value">${record.productName}</div>
+                        </div>
+                        <div class="record-card-field">
+                            <div class="record-card-label">Product For</div>
+                            <div class="record-card-value">${record.productFor}</div>
+                        </div>
+                        <div class="record-card-field">
+                            <div class="record-card-label">Description</div>
+                            <div class="record-card-value">${record.productDescription}</div>
+                        </div>
+                        ${record.remarks ? `<div class="record-card-field">
+                            <div class="record-card-label">Remarks</div>
+                            <div class="record-card-value">${record.remarks}</div>
+                        </div>` : ''}
+                        <div class="record-card-actions">
+                            <button class="btn-secondary" onclick="app.editRecord(${index})">✏️ Edit</button>
+                            <button class="btn-danger" onclick="app.deleteRecord(${index})">🗑️ Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            },
+
+            filterTable() {
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const filtered = this.state.records.filter(r => 
+                    r.productName.toLowerCase().includes(searchTerm) || 
+                    r.productFor.toLowerCase().includes(searchTerm)
+                );
+                this.renderFilteredRecords(filtered);
+            },
+
+            renderFilteredRecords(records) {
+                const container = document.getElementById('recordsContainer');
+                if (records.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🔍</div><p>No matching records found</p></div>';
+                    return;
+                }
+
+                container.innerHTML = records.map((record, index) => {
+                    const actualIndex = this.state.records.indexOf(record);
+                    return `
+                        <div class="record-card">
+                            <img src="${record.image}" class="record-card-image" onclick="app.viewImage('${record.image}')">
+                            <div class="record-card-field">
+                                <div class="record-card-label">Date</div>
+                                <div class="record-card-value">${record.date}</div>
+                            </div>
+                            <div class="record-card-field">
+                                <div class="record-card-label">Product Name</div>
+                                <div class="record-card-value">${record.productName}</div>
+                            </div>
+                            <div class="record-card-field">
+                                <div class="record-card-label">Product For</div>
+                                <div class="record-card-value">${record.productFor}</div>
+                            </div>
+                            <div class="record-card-field">
+                                <div class="record-card-label">Description</div>
+                                <div class="record-card-value">${record.productDescription}</div>
+                            </div>
+                            ${record.remarks ? `<div class="record-card-field">
+                                <div class="record-card-label">Remarks</div>
+                                <div class="record-card-value">${record.remarks}</div>
+                            </div>` : ''}
+                            <div class="record-card-actions">
+                                <button class="btn-secondary" onclick="app.editRecord(${actualIndex})">✏️ Edit</button>
+                                <button class="btn-danger" onclick="app.deleteRecord(${actualIndex})">🗑️ Delete</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            },
+
+            editRecord(index) {
+                this.editingIndex = index;
+                const record = this.state.records[index];
+                document.getElementById('editDate').value = record.date.split('/').reverse().join('-');
                 document.getElementById('editProductName').value = record.productName;
                 document.getElementById('editProductFor').value = record.productFor;
-                document.getElementById('editProductDescription').value = record.productDescription;
+                document.getElementById('editDescription').value = record.productDescription;
                 document.getElementById('editRemarks').value = record.remarks || '';
-
-                // Show current image
-                const editImagePreview = document.getElementById('editImagePreview');
-                const editImagePreviewContainer = document.getElementById('editImagePreviewContainer');
-                editImagePreview.src = record.image;
-                editImagePreviewContainer.classList.add('active');
-
-                document.getElementById('editModal').classList.add('active');
+                document.getElementById('editImagePreview').src = record.image;
+                document.getElementById('editImagePreview').style.display = 'block';
+                this.openModal('editModal');
             },
 
-            // Close Edit Modal
-            closeEditModal() {
-                document.getElementById('editModal').classList.remove('active');
-                document.getElementById('editProductImage').value = '';
-                document.getElementById('editImagePreviewContainer').classList.remove('active');
-                this.state.editingId = null;
+            saveEdit() {
+                const record = this.state.records[this.editingIndex];
+                record.date = this.formatDate(document.getElementById('editDate').value);
+                record.productName = document.getElementById('editProductName').value.trim();
+                record.productFor = document.getElementById('editProductFor').value.trim();
+                record.productDescription = document.getElementById('editDescription').value.trim();
+                record.remarks = document.getElementById('editRemarks').value.trim();
+
+                this.saveToStorage();
+                this.renderRecords();
+                this.closeModal('editModal');
+                this.showAlert('✅ Record updated successfully!', 'success');
             },
 
-            // Save Edit Record
-            saveEditRecord() {
-                const record = this.state.records.find(r => r.id === this.state.editingId);
-                if (!record) return;
-
-                record.date = document.getElementById('editDate').value;
-                record.productName = document.getElementById('editProductName').value;
-                record.productFor = document.getElementById('editProductFor').value;
-                record.productDescription = document.getElementById('editProductDescription').value;
-                record.remarks = document.getElementById('editRemarks').value;
-
-                // Handle new image if provided
-                const imageFile = document.getElementById('editProductImage').files[0];
-                if (imageFile) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        record.image = e.target.result;
-                        this.saveRecords();
-                        this.renderTable();
-                        this.closeEditModal();
-                        this.showAlert('✅ Product record updated successfully!', 'success');
-                    };
-                    reader.onerror = () => {
-                        alert('❌ Failed to read image file. Please try again.');
-                    };
-                    reader.readAsDataURL(imageFile);
-                } else {
-                    this.saveRecords();
-                    this.renderTable();
-                    this.closeEditModal();
-                    this.showAlert('✅ Product record updated successfully!', 'success');
-                    document.getElementById('editProductImage').value = '';
-                    document.getElementById('editCameraInput').value = '';
+            deleteRecord(index) {
+                if (confirm('Are you sure you want to delete this record?')) {
+                    this.state.records.splice(index, 1);
+                    this.saveToStorage();
+                    this.renderRecords();
+                    this.closeModal('editModal');
+                    this.showAlert('✅ Record deleted successfully!', 'success');
                 }
             },
 
-            // Open Delete Confirmation
-            openDeleteConfirm(id) {
-                this.state.deleteId = id;
-                document.getElementById('deleteConfirmModal').classList.add('active');
+            viewImage(imageSrc) {
+                document.getElementById('modalImage').src = imageSrc;
+                this.openModal('imageModal');
             },
 
-            // Close Delete Confirmation
-            closeDeleteConfirm() {
-                document.getElementById('deleteConfirmModal').classList.remove('active');
-                this.state.deleteId = null;
-            },
-
-            // Confirm Delete
-            confirmDelete() {
-                this.state.records = this.state.records.filter(r => r.id !== this.state.deleteId);
-                this.saveRecords();
-                this.renderTable();
-                this.closeDeleteConfirm();
-                this.showAlert('✅ Product record deleted successfully!', 'success');
-            },
-
-            // Open Image Modal
-            openImageModal(imageData) {
-                document.getElementById('modalImage').src = imageData;
-                document.getElementById('imageModal').classList.add('active');
-            },
-
-            // Close Image Modal
-            closeImageModal(event) {
-                if (event.target.id === 'imageModal') {
-                    document.getElementById('imageModal').classList.remove('active');
-                }
-            },
-
-            // Filter Table by Search
-            filterTable(searchTerm) {
-                const term = searchTerm.toLowerCase();
-                const rows = document.querySelectorAll('#tableBody tr');
-
-                rows.forEach(row => {
-                    if (row.textContent.toLowerCase().includes(term)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
+            switchTab(tab) {
+                this.state.currentTab = tab;
+                document.querySelectorAll('.tab-button').forEach((btn, idx) => {
+                    btn.classList.toggle('active', (idx === 0 && tab === 'form') || (idx === 1 && tab === 'table'));
                 });
+                document.getElementById('formSection').classList.toggle('active', tab === 'form');
+                document.getElementById('tableSection').classList.toggle('active', tab === 'table');
             },
 
-            // Render Table
-            renderTable() {
-                const tbody = document.getElementById('tableBody');
-                const recordCount = document.getElementById('recordCount');
-
-                if (this.state.records.length === 0) {
-                    tbody.innerHTML = `
-                        <tr>
-                            <td colspan="7" class="empty-state">
-                                <div class="empty-state-icon">📭</div>
-                                <div>No records yet. Add your first product record above.</div>
-                            </td>
-                        </tr>
-                    `;
-                    recordCount.textContent = '0';
-                    return;
-                }
-
-                tbody.innerHTML = this.state.records.map(record => `
-                    <tr>
-                        <td>${this.formatDateDDMMYYYY(record.date)}</td>
-                        <td class="text-truncate">${this.escapeHtml(record.productName)}</td>
-                        <td class="text-truncate">${this.escapeHtml(record.productFor)}</td>
-                        <td class="text-truncate">${this.escapeHtml(record.productDescription.substring(0, 50))}...</td>
-                        <td>
-                            <img src="${record.image}" class="thumbnail" onclick="app.openImageModal('${record.image.replace(/'/g, "\\'")}')" alt="Product">
-                        </td>
-                        <td class="text-truncate">${this.escapeHtml(record.remarks || '-')}</td>
-                        <td>
-                            <div class="actions">
-                                <button class="btn-icon btn-edit" onclick="app.openEditModal(${record.id})" title="Edit">✏️</button>
-                                <button class="btn-icon btn-delete" onclick="app.openDeleteConfirm(${record.id})" title="Delete">🗑️</button>
-                            </div>
-                        </td>
-                    </tr>
-                `).join('');
-
-                recordCount.textContent = this.state.records.length;
+            filterTable() {
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const filtered = this.state.records.filter(r => 
+                    r.productName.toLowerCase().includes(searchTerm) || 
+                    r.productFor.toLowerCase().includes(searchTerm)
+                );
+                this.renderFilteredRecords(filtered);
             },
 
-            // Save Records to localStorage
-            saveRecords() {
-                localStorage.setItem('productRecords', JSON.stringify(this.state.records));
-            },
-
-            // Load Records from localStorage
-            loadRecords() {
-                const saved = localStorage.getItem('productRecords');
-                this.state.records = saved ? JSON.parse(saved) : [];
-            },
-
-            // Open Setup Modal
-            openSetupModal() {
-                document.getElementById('gasUrl').value = this.state.gasUrl;
-                document.getElementById('sheetName').value = this.state.sheetName;
-                document.getElementById('setupModal').classList.add('active');
-            },
-
-            // Close Setup Modal
-            closeSetupModal() {
-                document.getElementById('setupModal').classList.remove('active');
-            },
-
-            // Save Setup Configuration
-            saveSetupConfig() {
-                const gasUrl = document.getElementById('gasUrl').value.trim();
-                const sheetName = document.getElementById('sheetName').value.trim();
-
-                if (!gasUrl) {
-                    alert('❌ Please enter a valid Google Apps Script URL.');
-                    return;
-                }
-
-                this.state.gasUrl = gasUrl;
-                this.state.sheetName = sheetName || 'Product Records';
-
-                localStorage.setItem('gasUrl', gasUrl);
-                localStorage.setItem('sheetName', sheetName);
-
-                this.showAlert('✅ Google Sheets configuration saved!', 'success');
-                this.closeSetupModal();
-                this.updateConnectionStatus();
-            },
-
-            // Update Connection Status
-            updateConnectionStatus() {
-                const statusDot = document.getElementById('statusDot');
-                const statusText = document.getElementById('statusText');
-
-                if (this.state.gasUrl) {
-                    statusDot.classList.add('connected');
-                    statusText.textContent = '✓ Connected to Google Sheets';
-                    this.state.isConnected = true;
-                } else {
-                    statusDot.classList.remove('connected');
-                    statusText.textContent = 'Ready (Local Mode)';
-                    this.state.isConnected = false;
-                }
-            },
-
-            // Sync to Google Sheets
             syncToGoogleSheets() {
                 if (!this.state.gasUrl) {
-                    alert('❌ Please configure Google Sheets first. Click "Setup" button.');
+                    this.showAlert('❌ Please configure Google Sheets first', 'error');
+                    this.openModal('setupModal');
                     return;
                 }
 
                 if (this.state.records.length === 0) {
-                    alert('⚠️ No records to sync.');
+                    this.showAlert('⚠️ No records to sync', 'info');
                     return;
                 }
 
-                const button = event.target;
-                button.disabled = true;
-                button.innerHTML = '<span class="loading"></span> Syncing...';
-
-                // Prepare data for Google Sheets - send ALL current records
-                // This allows the script to detect deletions by comparing with sheet
                 const data = this.state.records.map(record => ({
                     date: record.date,
                     productName: record.productName,
@@ -1714,7 +1122,6 @@
                     imageBase64: record.image
                 }));
 
-                // Send to Google Apps Script
                 fetch(this.state.gasUrl, {
                     method: 'POST',
                     body: JSON.stringify({
@@ -1725,237 +1132,135 @@
                 })
                 .then(response => response.json())
                 .then(result => {
-                    button.disabled = false;
-                    button.innerHTML = '☁️ Sync to Google Sheets';
-                    
                     if (result.success) {
-                        const message = `✅ Sync successful! New: ${result.newRecords || 0}, Updated: ${result.updatedRecords || 0}, Deleted: ${result.deletedRecords || 0}`;
-                        this.showAlert(message, 'success');
+                        this.showAlert(`✅ Synced! New: ${result.newRecords || 0}, Updated: ${result.updatedRecords || 0}, Deleted: ${result.deletedRecords || 0}`, 'success');
+                        document.getElementById('statusText').textContent = 'Connected to Google Sheets';
                     } else {
-                        this.showAlert(`⚠️ Sync completed with message: ${result.message || 'Check your Google Sheets'}`, 'info');
+                        this.showAlert(`⚠️ ${result.message}`, 'info');
                     }
                 })
                 .catch(error => {
-                    button.disabled = false;
-                    button.innerHTML = '☁️ Sync to Google Sheets';
-                    console.error('Sync error:', error);
-                    this.showAlert(`❌ Sync failed: ${error.message}. Check console for details.`, 'error');
+                    this.showAlert(`❌ Sync failed: ${error.message}`, 'error');
                 });
             },
 
-            // Export to Excel
             exportToExcel() {
                 if (this.state.records.length === 0) {
-                    alert('⚠️ No records to export.');
+                    this.showAlert('⚠️ No records to export', 'info');
                     return;
                 }
 
-                const button = event.target;
-                button.disabled = true;
-                button.innerHTML = '<span class="loading"></span> Exporting...';
+                this.showAlert('📥 Exporting to Excel...', 'info');
+                this.createExcelFile();
+            },
 
-                // Load ExcelJS library
+            createExcelFile() {
                 const script = document.createElement('script');
                 script.src = 'https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js';
                 script.onload = () => {
-                    this.createExcelFileWithImages();
-                    button.disabled = false;
-                    button.innerHTML = '📊 Export to Excel';
-                };
-                script.onerror = () => {
-                    button.disabled = false;
-                    button.innerHTML = '📊 Export to Excel';
-                    this.showAlert('❌ Failed to load Excel library. Please try again.', 'error');
+                    const ExcelJS = window.ExcelJS;
+                    const workbook = new ExcelJS.Workbook();
+                    const worksheet = workbook.addWorksheet('Product Records');
+
+                    worksheet.columns = [
+                        { header: 'Date', key: 'date', width: 12 },
+                        { header: 'Product Name', key: 'productName', width: 20 },
+                        { header: 'Product For', key: 'productFor', width: 20 },
+                        { header: 'Description', key: 'productDescription', width: 25 },
+                        { header: 'Remarks', key: 'remarks', width: 20 },
+                        { header: 'Picture', key: 'picture', width: 52.65 }
+                    ];
+
+                    worksheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } };
+                    worksheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF2c3e50' } };
+
+                    this.state.records.forEach(record => {
+                        const row = worksheet.addRow({
+                            date: record.date,
+                            productName: record.productName,
+                            productFor: record.productFor,
+                            productDescription: record.productDescription,
+                            remarks: record.remarks || ''
+                        });
+
+                        row.height = 202.32;
+
+                        if (record.image) {
+                            const imageId = workbook.addImage({
+                                base64: record.image,
+                                extension: 'jpeg'
+                            });
+                            worksheet.addImage(imageId, `F${row.number}:F${row.number}`);
+                            worksheet.getColumn('F').width = 52.65;
+                        }
+                    });
+
+                    workbook.xlsx.writeBuffer().then(buffer => {
+                        const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                        const url = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = `Product_Register_${new Date().toISOString().split('T')[0]}.xlsx`;
+                        link.click();
+                        this.showAlert('✅ Excel file downloaded!', 'success');
+                    });
                 };
                 document.head.appendChild(script);
             },
 
-                 // Create Excel File with Embedded Images using ExcelJS
-            createExcelFileWithImages() {
-                const ExcelJS = window.ExcelJS;
-                if (!ExcelJS) {
-                    this.showAlert('❌ Excel library not loaded.', 'error');
-                    return;
-                }
-
-                const workbook = new ExcelJS.Workbook();
-                const worksheet = workbook.addWorksheet('Product Records');
-
-                // Define columns
-                worksheet.columns = [
-                    { header: 'Date', key: 'date', width: 12 },
-                    { header: 'Product Name', key: 'productName', width: 20 },
-                    { header: 'Product For', key: 'productFor', width: 18 },
-                    { header: 'Description', key: 'productDescription', width: 30 },
-                    { header: 'Picture', key: 'picture', width: 52.65 },
-                    { header: 'Remarks', key: 'remarks', width: 25 }
-                ];
-
-                // Style header row
-                worksheet.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } };
-                worksheet.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF2c3e50' } };
-                worksheet.getRow(1).alignment = { horizontal: 'center', vertical: 'center' };
-
-                // Add data rows with images
-                this.state.records.forEach((record, index) => {
-                    const rowNum = index + 2;
-                    const row = worksheet.addRow({
-                        date: this.formatDateDDMMYYYY(record.date),
-                        productName: record.productName,
-                        productFor: record.productFor,
-                        productDescription: record.productDescription,
-                        remarks: record.remarks || ''
-                    });
-
-                    // Set row height to accommodate image (2.81 inches = 202.32 points)
-                    row.height = 202.32;
-
-                    // Add image to the Picture column (column E)
-                    if (record.image) {
-                        try {
-                            // Convert base64 to blob
-                            const base64Data = record.image.split(',')[1];
-                            const binaryString = atob(base64Data);
-                            const bytes = new Uint8Array(binaryString.length);
-                            for (let i = 0; i < binaryString.length; i++) {
-                                bytes[i] = binaryString.charCodeAt(i);
-                            }
-                            const blob = new Blob([bytes], { type: 'image/jpeg' });
-                            
-                            // Create image ID and add to workbook
-                            const imageId = workbook.addImage({
-                                buffer: blob,
-                                extension: 'jpeg'
-                            });
-
-                            // Insert image in the cell with specific dimensions
-                            // 3.51 inches width, 2.81 inches height
-                            worksheet.addImage(imageId, {
-                                tl: { col: 4, row: rowNum - 1 },
-                                ext: { width: 337, height: 270 }
-                            });
-                        } catch (err) {
-                            console.error('Error adding image:', err);
-                        }
-                    }
-
-                    // Center align text cells
-                    row.getCell('date').alignment = { horizontal: 'center', vertical: 'center' };
-                    row.getCell('productName').alignment = { horizontal: 'left', vertical: 'top', wrapText: true };
-                    row.getCell('productFor').alignment = { horizontal: 'left', vertical: 'top', wrapText: true };
-                    row.getCell('productDescription').alignment = { horizontal: 'left', vertical: 'top', wrapText: true };
-                    row.getCell('remarks').alignment = { horizontal: 'left', vertical: 'top', wrapText: true };
-                });
-
-                // Generate and download file
-                const fileName = `Product_Records_${new Date().toISOString().split('T')[0]}.xlsx`;
-                workbook.xlsx.writeBuffer().then(buffer => {
-                    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-                    const url = window.URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.download = fileName;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    window.URL.revokeObjectURL(url);
-                    
-                    this.showAlert('✅ Excel file with embedded images exported successfully!', 'success');
-                }).catch(err => {
-                    console.error('Error generating Excel file:', err);
-                    this.showAlert('❌ Error generating Excel file. Please try again.', 'error');
-                });
-            },         // Clear All Data
-            clearAllData() {
-                if (!confirm('⚠️ Are you sure you want to delete ALL records? This cannot be undone.')) {
-                    return;
-                }
-
-                this.state.records = [];
-                this.saveRecords();
-                this.renderTable();
-                this.showAlert('✅ All records cleared.', 'success');
+            openSetup() {
+                document.getElementById('gasUrlInput').value = this.state.gasUrl;
+                document.getElementById('sheetNameInput').value = this.state.sheetName;
+                this.openModal('setupModal');
             },
 
-            // Show Alert
+            saveSetup() {
+                this.state.gasUrl = document.getElementById('gasUrlInput').value.trim();
+                this.state.sheetName = document.getElementById('sheetNameInput').value.trim() || 'Product Records';
+                this.saveToStorage();
+                this.closeModal('setupModal');
+                this.showAlert('✅ Setup saved!', 'success');
+                if (this.state.gasUrl) {
+                    document.getElementById('statusText').textContent = 'Connected to Google Sheets';
+                }
+            },
+
+            openModal(id) {
+                document.getElementById(id).classList.add('active');
+            },
+
+            closeModal(id) {
+                document.getElementById(id).classList.remove('active');
+            },
+
             showAlert(message, type = 'info') {
-                const alertDiv = document.createElement('div');
-                alertDiv.className = `alert alert-${type}`;
-                alertDiv.innerHTML = `
-                    <span class="alert-icon">${type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span>
-                    <span>${message}</span>
-                `;
-
-                const formSection = document.querySelector('.form-section');
-                formSection.insertBefore(alertDiv, formSection.firstChild);
-
-                setTimeout(() => alertDiv.remove(), 5000);
+                const alert = document.createElement('div');
+                alert.className = `alert ${type}`;
+                alert.textContent = message;
+                document.body.appendChild(alert);
+                setTimeout(() => alert.remove(), 3000);
             },
 
-            // Escape HTML to prevent XSS
-            escapeHtml(text) {
-                const map = {
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    '"': '&quot;',
-                    "'": '&#039;'
-                };
-                return text.replace(/[&<>"']/g, m => map[m]);
+            saveToStorage() {
+                localStorage.setItem('productRegisterData', JSON.stringify(this.state));
+            },
+
+            loadFromStorage() {
+                const data = localStorage.getItem('productRegisterData');
+                if (data) {
+                    this.state = JSON.parse(data);
+                }
+            },
+
+            registerServiceWorker() {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW error:', err));
+                }
             }
         };
 
         // Initialize app when DOM is ready
-        document.addEventListener('DOMContentLoaded', () => {
-            app.init();
-        });
-    </script>
-
-    <!-- Service Worker Registration for PWA -->
-    <script>
-        // Register Service Worker for offline support and caching
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then((registration) => {
-                        console.log('Service Worker registered successfully:', registration);
-                        
-                        // Check for updates periodically
-                        setInterval(() => {
-                            registration.update();
-                        }, 60000); // Check every minute
-                    })
-                    .catch((error) => {
-                        console.warn('Service Worker registration failed:', error);
-                    });
-            });
-
-            // Listen for service worker updates
-            navigator.serviceWorker.addEventListener('controllerchange', () => {
-                console.log('Service Worker controller changed - app updated');
-                // Optionally show a notification that the app has been updated
-                if (window.app && window.app.showAlert) {
-                    window.app.showAlert('✅ App updated! Please refresh for the latest version.', 'success');
-                }
-            });
-        }
-
-        // Handle app installation prompts
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            console.log('Install prompt available');
-            
-            // You can show a custom install button here if desired
-            // For now, the browser will show its own prompt
-        });
-
-        // Handle successful installation
-        window.addEventListener('appinstalled', () => {
-            console.log('App installed as PWA');
-            deferredPrompt = null;
-        });
+        document.addEventListener('DOMContentLoaded', () => app.init());
     </script>
 </body>
 </html>

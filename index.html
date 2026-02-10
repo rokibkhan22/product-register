@@ -121,6 +121,279 @@
             }
         }
 
+        /* Mobile Responsiveness - Tablet */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 15px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .status-bar {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .content {
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .form-section {
+                padding: 15px;
+            }
+
+            .form-section h2 {
+                font-size: 16px;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                font-size: 16px;
+            }
+
+            .button-group {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            button {
+                padding: 10px 15px;
+                font-size: 13px;
+            }
+
+            .table-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            .thumbnail {
+                width: 50px;
+                height: 40px;
+            }
+
+            .modal-content {
+                max-width: 95%;
+            }
+        }
+
+        /* Mobile Responsiveness - Phone */
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
+            }
+
+            .container {
+                border-radius: 8px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .header {
+                padding: 12px;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .header h1 {
+                font-size: 16px;
+            }
+
+            .header-icon {
+                font-size: 20px;
+            }
+
+            .status-bar {
+                width: 100%;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .status-indicator {
+                padding: 6px 10px;
+                font-size: 11px;
+                justify-content: center;
+            }
+
+            .content {
+                display: grid;
+                grid-template-columns: 1fr;
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .form-section {
+                padding: 12px;
+            }
+
+            .form-section h2 {
+                font-size: 14px;
+                margin-bottom: 12px;
+            }
+
+            .form-group {
+                margin-bottom: 10px;
+            }
+
+            .form-group label {
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                padding: 8px;
+                font-size: 14px;
+                width: 100%;
+            }
+
+            .form-group textarea {
+                min-height: 50px;
+            }
+
+            .button-group {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 6px;
+                margin-top: 12px;
+            }
+
+            button {
+                padding: 8px 12px;
+                font-size: 12px;
+                width: 100%;
+            }
+
+            .btn-icon {
+                width: 24px;
+                height: 24px;
+                font-size: 12px;
+            }
+
+            .table-section {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .table-controls {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                margin-bottom: 12px;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .search-box input {
+                padding: 8px;
+                font-size: 14px;
+                width: 100%;
+            }
+
+            .table-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                border-radius: 4px;
+            }
+
+            table {
+                font-size: 11px;
+                min-width: 600px;
+            }
+
+            th {
+                padding: 8px;
+                font-size: 10px;
+                text-transform: uppercase;
+            }
+
+            td {
+                padding: 8px;
+                font-size: 11px;
+            }
+
+            .thumbnail {
+                width: 45px;
+                height: 36px;
+            }
+
+            .actions {
+                gap: 4px;
+            }
+
+            .btn-edit, .btn-delete {
+                padding: 6px;
+                font-size: 11px;
+            }
+
+            .modal {
+                padding: 10px;
+            }
+
+            .modal-content {
+                max-width: 98%;
+                max-height: 95vh;
+                border-radius: 8px;
+            }
+
+            .modal-header {
+                padding: 12px;
+            }
+
+            .modal-header h2 {
+                font-size: 14px;
+            }
+
+            .modal-body {
+                padding: 12px;
+            }
+
+            .modal-footer {
+                padding: 10px;
+                gap: 6px;
+            }
+
+            .file-input-label {
+                padding: 12px;
+                font-size: 12px;
+            }
+
+            .image-preview {
+                max-width: 120px;
+                height: 96px;
+            }
+
+            .image-info {
+                font-size: 10px;
+            }
+
+            .empty-state {
+                padding: 30px 10px;
+            }
+
+            .empty-state-icon {
+                font-size: 28px;
+            }
+        }
+
         /* Form Section */
         .form-section {
             background: #f8f9fa;
@@ -1430,7 +1703,8 @@
                 button.disabled = true;
                 button.innerHTML = '<span class="loading"></span> Syncing...';
 
-                // Prepare data for Google Sheets
+                // Prepare data for Google Sheets - send ALL current records
+                // This allows the script to detect deletions by comparing with sheet
                 const data = this.state.records.map(record => ({
                     date: record.date,
                     productName: record.productName,
@@ -1455,7 +1729,8 @@
                     button.innerHTML = '☁️ Sync to Google Sheets';
                     
                     if (result.success) {
-                        this.showAlert(`✅ Successfully synced ${result.recordsCount || this.state.records.length} records to Google Sheets!`, 'success');
+                        const message = `✅ Sync successful! New: ${result.newRecords || 0}, Updated: ${result.updatedRecords || 0}, Deleted: ${result.deletedRecords || 0}`;
+                        this.showAlert(message, 'success');
                     } else {
                         this.showAlert(`⚠️ Sync completed with message: ${result.message || 'Check your Google Sheets'}`, 'info');
                     }

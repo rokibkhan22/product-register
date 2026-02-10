@@ -919,7 +919,7 @@
                 }
 
                 const record = {
-                    id: Date.now(),
+                    id: Date.now() + '_' + Math.random().toString(36).substr(2, 9),
                     date: this.formatDate(date),
                     productName,
                     productFor,
@@ -1108,12 +1108,8 @@
                     return;
                 }
 
-                if (this.state.records.length === 0) {
-                    this.showAlert('⚠️ No records to sync', 'info');
-                    return;
-                }
-
                 const data = this.state.records.map(record => ({
+                    id: record.id,
                     date: record.date,
                     productName: record.productName,
                     productFor: record.productFor,
@@ -1133,6 +1129,9 @@
                 .then(response => response.json())
                 .then(result => {
                     if (result.success) {
+                        if (result.sheetRecords && Array.isArray(result.sheetRecords)) {
+                            this.mergeSheetRecords(result.sheetRecords);
+                        }
                         this.showAlert(`✅ Synced! New: ${result.newRecords || 0}, Updated: ${result.updatedRecords || 0}, Deleted: ${result.deletedRecords || 0}`, 'success');
                         document.getElementById('statusText').textContent = 'Connected to Google Sheets';
                     } else {
@@ -1142,6 +1141,34 @@
                 .catch(error => {
                     this.showAlert(`❌ Sync failed: ${error.message}`, 'error');
                 });
+            },
+
+            mergeSheetRecords(sheetRecords) {
+                const sheetMap = {};
+                sheetRecords.forEach(record => {
+                    sheetMap[record.id] = record;
+                });
+
+                sheetRecords.forEach(sheetRecord => {
+                    const existingIndex = this.state.records.findIndex(r => r.id === sheetRecord.id);
+                    if (existingIndex === -1) {
+                        this.state.records.push({
+                            id: sheetRecord.id,
+                            date: sheetRecord.date,
+                            productName: sheetRecord.productName,
+                            productFor: sheetRecord.productFor,
+                            productDescription: sheetRecord.productDescription,
+                            remarks: sheetRecord.remarks || '',
+                            image: null,
+                            imageLink: sheetRecord.imageLink
+                        });
+                    }
+                });
+
+                this.state.records = this.state.records.filter(record => sheetMap[record.id]);
+
+                this.saveToStorage();
+                this.renderRecords();
             },
 
             exportToExcel() {

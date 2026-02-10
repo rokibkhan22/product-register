@@ -1144,14 +1144,17 @@
             },
 
             mergeSheetRecords(sheetRecords) {
+                // Create a map of sheet records by ID
                 const sheetMap = {};
                 sheetRecords.forEach(record => {
                     sheetMap[record.id] = record;
                 });
 
+                // Merge: Add or update records from sheet
                 sheetRecords.forEach(sheetRecord => {
                     const existingIndex = this.state.records.findIndex(r => r.id === sheetRecord.id);
                     if (existingIndex === -1) {
+                        // New record from sheet - add it
                         this.state.records.push({
                             id: sheetRecord.id,
                             date: sheetRecord.date,
@@ -1162,10 +1165,19 @@
                             image: null,
                             imageLink: sheetRecord.imageLink
                         });
+                    } else {
+                        // Record exists locally - update it with sheet data (in case it was edited elsewhere)
+                        this.state.records[existingIndex].date = sheetRecord.date;
+                        this.state.records[existingIndex].productName = sheetRecord.productName;
+                        this.state.records[existingIndex].productFor = sheetRecord.productFor;
+                        this.state.records[existingIndex].productDescription = sheetRecord.productDescription;
+                        this.state.records[existingIndex].remarks = sheetRecord.remarks || '';
+                        this.state.records[existingIndex].imageLink = sheetRecord.imageLink;
                     }
                 });
 
-                this.state.records = this.state.records.filter(record => sheetMap[record.id]);
+                // IMPORTANT: Do NOT filter out local records that aren't in the sheet
+                // This allows devices to have records that haven't been synced yet
 
                 this.saveToStorage();
                 this.renderRecords();

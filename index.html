@@ -61,6 +61,7 @@
             min-height: 100vh;
         }
 
+        /* Header */
         .header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
@@ -114,15 +115,12 @@
             animation: pulse 2s infinite;
         }
 
-        .status-dot.synced {
-            background: var(--success);
-        }
-
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
 
+        /* Main Content */
         .content {
             display: flex;
             flex-direction: column;
@@ -133,6 +131,7 @@
             -webkit-overflow-scrolling: touch;
         }
 
+        /* Tabs */
         .tabs {
             display: flex;
             gap: 0;
@@ -164,6 +163,7 @@
             background: #f8f9fa;
         }
 
+        /* Form Section */
         .form-section {
             background: white;
             padding: 16px;
@@ -271,6 +271,15 @@
             background: #c0392b;
         }
 
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:active {
+            background: #229954;
+        }
+
         .file-input-wrapper {
             position: relative;
             overflow: hidden;
@@ -312,6 +321,7 @@
             margin-top: 4px;
         }
 
+        /* Table Section */
         .table-section {
             background: white;
             padding: 0;
@@ -355,6 +365,7 @@
             overflow-x: auto;
         }
 
+        /* Card Layout for Mobile */
         .records-cards {
             display: flex;
             flex-direction: column;
@@ -411,6 +422,50 @@
             font-size: 11px;
         }
 
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid var(--light);
+            word-break: break-word;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .thumbnail {
+            width: 50px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 6px 8px;
+            font-size: 11px;
+        }
+
         .empty-state {
             display: flex;
             flex-direction: column;
@@ -431,6 +486,7 @@
             font-size: 13px;
         }
 
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -524,6 +580,7 @@
             margin-bottom: 12px;
         }
 
+        /* Alert */
         .alert {
             position: fixed;
             top: 12px;
@@ -563,28 +620,93 @@
             background: var(--accent);
             color: white;
         }
+
+        /* Responsive Table - Show as cards on mobile */
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+                width: 100%;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tr {
+                margin-bottom: 12px;
+                border: 1px solid var(--light);
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            td {
+                padding: 8px 12px;
+                text-align: left;
+                border-bottom: 1px solid var(--light);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            td:last-child {
+                border-bottom: none;
+            }
+
+            td:before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: var(--text-light);
+                font-size: 11px;
+                min-width: 100px;
+            }
+
+            .thumbnail {
+                width: 60px;
+                height: 48px;
+            }
+        }
+
+        /* Loading spinner */
+        .loading {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <div class="header">
             <h1><span class="header-icon">📋</span> Product Register</h1>
             <div class="status-bar">
                 <div class="status-indicator">
-                    <span class="status-dot" id="statusDot"></span>
-                    <span id="statusText">Syncing...</span>
+                    <span class="status-dot"></span>
+                    <span id="statusText">Ready (Local)</span>
                 </div>
                 <button class="btn-secondary" style="padding: 6px 10px; font-size: 12px;" onclick="app.openSetup()">⚙️</button>
             </div>
         </div>
 
+        <!-- Tabs -->
         <div class="tabs">
             <button class="tab-button active" onclick="app.switchTab('form')">➕ Add Record</button>
             <button class="tab-button" onclick="app.switchTab('table')">📊 View Records</button>
+            <button class="tab-button" onclick="app.syncToGoogleSheets()">☁️ Sync</button>
             <button class="tab-button" onclick="app.exportToExcel()">📥 Export</button>
         </div>
 
+        <!-- Content -->
         <div class="content">
+            <!-- Form Section -->
             <div class="form-section active" id="formSection">
                 <h2>Product Information</h2>
 
@@ -633,6 +755,7 @@
                 </div>
             </div>
 
+            <!-- Table Section -->
             <div class="table-section" id="tableSection">
                 <div class="table-controls">
                     <div class="search-box">
@@ -646,6 +769,7 @@
         </div>
     </div>
 
+    <!-- Image Modal -->
     <div class="modal" id="imageModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -658,6 +782,7 @@
         </div>
     </div>
 
+    <!-- Setup Modal -->
     <div class="modal" id="setupModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -681,6 +806,7 @@
         </div>
     </div>
 
+    <!-- Edit Modal -->
     <div class="modal" id="editModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -722,13 +848,12 @@
         const app = {
             state: {
                 records: [],
+                deletedIds: [],
                 gasUrl: '',
                 sheetName: 'Product Records',
                 currentTab: 'form'
             },
             editingIndex: null,
-            syncInterval: null,
-            isSyncing: false,
 
             init() {
                 this.loadFromStorage();
@@ -736,12 +861,6 @@
                 this.setupEventListeners();
                 this.renderRecords();
                 this.registerServiceWorker();
-                
-                // Auto-sync on load
-                this.autoSync();
-                
-                // Set up background sync every 20 seconds
-                this.syncInterval = setInterval(() => this.autoSync(), 20000);
             },
 
             setupEventListeners() {
@@ -788,7 +907,7 @@
                 event.target.value = '';
             },
 
-            async handleSubmit() {
+            handleSubmit() {
                 const date = document.getElementById('dateInput').value;
                 const productName = document.getElementById('productNameInput').value.trim();
                 const productFor = document.getElementById('productForInput').value.trim();
@@ -810,93 +929,11 @@
                     image: this.currentImage
                 };
 
-                // OPTIMISTIC UI: Save locally first
                 this.state.records.push(record);
                 this.saveToStorage();
                 this.renderRecords();
                 this.clearForm();
                 this.showAlert('✅ Record added successfully!', 'success');
-
-                // Then sync to Google Sheets in background
-                if (this.state.gasUrl) {
-                    this.syncSingleRecord(record, 'add');
-                }
-            },
-
-            async syncSingleRecord(record, action) {
-                if (!this.state.gasUrl || this.isSyncing) return;
-
-                try {
-                    this.isSyncing = true;
-                    const response = await fetch(this.state.gasUrl, {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            action: action === 'add' ? 'addRecord' : 'updateRecord',
-                            sheetName: this.state.sheetName,
-                            record: record
-                        })
-                    });
-
-                    const result = await response.json();
-                    if (result.success) {
-                        // Immediately pull all records from sheet
-                        await this.autoSync();
-                    }
-                } catch (error) {
-                    console.log('Sync error:', error);
-                } finally {
-                    this.isSyncing = false;
-                }
-            },
-
-            async autoSync() {
-                if (!this.state.gasUrl || this.isSyncing) return;
-
-                try {
-                    this.isSyncing = true;
-                    const response = await fetch(this.state.gasUrl, {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            action: 'getAllRecords',
-                            sheetName: this.state.sheetName
-                        })
-                    });
-
-                    const result = await response.json();
-                    if (result.success && result.records) {
-                        // Mirror the sheet state - replace local records with sheet records
-                        this.state.records = result.records.map(r => ({
-                            id: r.id,
-                            date: r.date,
-                            productName: r.productName,
-                            productFor: r.productFor,
-                            productDescription: r.productDescription,
-                            remarks: r.remarks || '',
-                            image: null,
-                            imageLink: r.imageLink
-                        }));
-                        this.saveToStorage();
-                        this.renderRecords();
-                        this.updateSyncStatus(true);
-                    }
-                } catch (error) {
-                    console.log('Auto-sync error:', error);
-                    this.updateSyncStatus(false);
-                } finally {
-                    this.isSyncing = false;
-                }
-            },
-
-            updateSyncStatus(synced) {
-                const dot = document.getElementById('statusDot');
-                const text = document.getElementById('statusText');
-                if (synced) {
-                    dot.classList.add('synced');
-                    text.textContent = 'Synced ✓';
-                } else {
-                    dot.classList.remove('synced');
-                    text.textContent = 'Ready (Local)';
-                }
             },
 
             formatDate(dateStr) {
@@ -926,7 +963,7 @@
 
                 container.innerHTML = this.state.records.map((record, index) => `
                     <div class="record-card">
-                        ${record.image ? `<img src="${record.image}" class="record-card-image" onclick="app.viewImage('${record.image}')">` : ''}
+                        <img src="${record.image}" class="record-card-image" onclick="app.viewImage('${record.image}')">
                         <div class="record-card-field">
                             <div class="record-card-label">Date</div>
                             <div class="record-card-value">${record.date}</div>
@@ -975,7 +1012,7 @@
                     const actualIndex = this.state.records.indexOf(record);
                     return `
                         <div class="record-card">
-                            ${record.image ? `<img src="${record.image}" class="record-card-image" onclick="app.viewImage('${record.image}')">` : ''}
+                            <img src="${record.image}" class="record-card-image" onclick="app.viewImage('${record.image}')">
                             <div class="record-card-field">
                                 <div class="record-card-label">Date</div>
                                 <div class="record-card-value">${record.date}</div>
@@ -1013,14 +1050,12 @@
                 document.getElementById('editProductFor').value = record.productFor;
                 document.getElementById('editDescription').value = record.productDescription;
                 document.getElementById('editRemarks').value = record.remarks || '';
-                if (record.image) {
-                    document.getElementById('editImagePreview').src = record.image;
-                    document.getElementById('editImagePreview').style.display = 'block';
-                }
+                document.getElementById('editImagePreview').src = record.image;
+                document.getElementById('editImagePreview').style.display = 'block';
                 this.openModal('editModal');
             },
 
-            async saveEdit() {
+            saveEdit() {
                 const record = this.state.records[this.editingIndex];
                 record.date = this.formatDate(document.getElementById('editDate').value);
                 record.productName = document.getElementById('editProductName').value.trim();
@@ -1028,46 +1063,22 @@
                 record.productDescription = document.getElementById('editDescription').value.trim();
                 record.remarks = document.getElementById('editRemarks').value.trim();
 
-                // Immediately sync to Google Sheets
-                if (this.state.gasUrl) {
-                    await this.syncSingleRecord(record, 'update');
-                } else {
-                    this.saveToStorage();
-                    this.renderRecords();
-                }
-
+                this.saveToStorage();
+                this.renderRecords();
                 this.closeModal('editModal');
                 this.showAlert('✅ Record updated successfully!', 'success');
             },
 
-            async deleteRecord(index) {
+            deleteRecord(index) {
                 if (confirm('Are you sure you want to delete this record?')) {
-                    const recordId = this.state.records[index].id;
-                    this.state.records.splice(index, 1);
-
-                    // Immediately sync deletion to Google Sheets
-                    if (this.state.gasUrl) {
-                        try {
-                            await fetch(this.state.gasUrl, {
-                                method: 'POST',
-                                body: JSON.stringify({
-                                    action: 'deleteRecord',
-                                    sheetName: this.state.sheetName,
-                                    recordId: recordId
-                                })
-                            });
-                            // Pull latest records from sheet
-                            await this.autoSync();
-                        } catch (error) {
-                            console.log('Delete sync error:', error);
-                            this.saveToStorage();
-                            this.renderRecords();
-                        }
-                    } else {
-                        this.saveToStorage();
-                        this.renderRecords();
+                    const deletedRecord = this.state.records[index];
+                    // Track the deletion by ID
+                    if (deletedRecord.id && !this.state.deletedIds.includes(deletedRecord.id)) {
+                        this.state.deletedIds.push(deletedRecord.id);
                     }
-
+                    this.state.records.splice(index, 1);
+                    this.saveToStorage();
+                    this.renderRecords();
                     this.closeModal('editModal');
                     this.showAlert('✅ Record deleted successfully!', 'success');
                 }
@@ -1085,6 +1096,79 @@
                 });
                 document.getElementById('formSection').classList.toggle('active', tab === 'form');
                 document.getElementById('tableSection').classList.toggle('active', tab === 'table');
+            },
+
+            filterTable() {
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const filtered = this.state.records.filter(r => 
+                    r.productName.toLowerCase().includes(searchTerm) || 
+                    r.productFor.toLowerCase().includes(searchTerm)
+                );
+                this.renderFilteredRecords(filtered);
+            },
+
+            syncToGoogleSheets() {
+                if (!this.state.gasUrl) {
+                    this.showAlert('❌ Please configure Google Sheets first', 'error');
+                    this.openModal('setupModal');
+                    return;
+                }
+
+                const data = this.state.records.map(record => ({
+                    id: record.id,
+                    date: record.date,
+                    productName: record.productName,
+                    productFor: record.productFor,
+                    productDescription: record.productDescription,
+                    remarks: record.remarks || '',
+                    imageBase64: record.image
+                }));
+
+                fetch(this.state.gasUrl, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        action: 'syncRecords',
+                        sheetName: this.state.sheetName,
+                        records: data,
+                        deletedIds: this.state.deletedIds
+                    })
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        // Mirror the sheet state: replace local records with sheet records
+                        if (result.sheetRecords && Array.isArray(result.sheetRecords)) {
+                            this.mirrorSheetState(result.sheetRecords);
+                        }
+                        // Clear the deleted IDs list after successful sync
+                        this.state.deletedIds = [];
+                        this.showAlert(`✅ Synced! New: ${result.newRecords || 0}, Updated: ${result.updatedRecords || 0}, Deleted: ${result.deletedRecords || 0}`, 'success');
+                        document.getElementById('statusText').textContent = 'Connected to Google Sheets';
+                    } else {
+                        this.showAlert(`⚠️ ${result.message}`, 'info');
+                    }
+                })
+                .catch(error => {
+                    this.showAlert(`❌ Sync failed: ${error.message}`, 'error');
+                });
+            },
+
+            mirrorSheetState(sheetRecords) {
+                // UNIVERSAL MIRROR: Replace local records with sheet records
+                // This ensures all devices have exactly the same data
+                this.state.records = sheetRecords.map(sheetRecord => ({
+                    id: sheetRecord.id,
+                    date: sheetRecord.date,
+                    productName: sheetRecord.productName,
+                    productFor: sheetRecord.productFor,
+                    productDescription: sheetRecord.productDescription,
+                    remarks: sheetRecord.remarks || '',
+                    image: null,
+                    imageLink: sheetRecord.imageLink
+                }));
+
+                this.saveToStorage();
+                this.renderRecords();
             },
 
             exportToExcel() {
@@ -1163,7 +1247,9 @@
                 this.saveToStorage();
                 this.closeModal('setupModal');
                 this.showAlert('✅ Setup saved!', 'success');
-                this.autoSync();
+                if (this.state.gasUrl) {
+                    document.getElementById('statusText').textContent = 'Connected to Google Sheets';
+                }
             },
 
             openModal(id) {
@@ -1200,6 +1286,7 @@
             }
         };
 
+        // Initialize app when DOM is ready
         document.addEventListener('DOMContentLoaded', () => app.init());
     </script>
 </body>

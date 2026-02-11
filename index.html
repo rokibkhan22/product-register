@@ -810,18 +810,17 @@
                     image: this.currentImage
                 };
 
-                // Immediately sync to Google Sheets
-                if (this.state.gasUrl) {
-                    await this.syncSingleRecord(record, 'add');
-                } else {
-                    // Add to local state if no Google Sheets configured
-                    this.state.records.push(record);
-                    this.saveToStorage();
-                    this.renderRecords();
-                }
-
+                // OPTIMISTIC UI: Save locally first
+                this.state.records.push(record);
+                this.saveToStorage();
+                this.renderRecords();
                 this.clearForm();
                 this.showAlert('✅ Record added successfully!', 'success');
+
+                // Then sync to Google Sheets in background
+                if (this.state.gasUrl) {
+                    this.syncSingleRecord(record, 'add');
+                }
             },
 
             async syncSingleRecord(record, action) {
